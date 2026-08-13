@@ -12,13 +12,23 @@ state = {
     'is_screen_visible' : True
 }
 
-player = {
-    'body' : [
-        (state['player_y'],state['player_x']), #0,0
-        (state['player_y'],state['player_x']+1),#0,1
-        state['player_y']
-    ]
-}
+def get_player_location(state):
+    player = {
+        'body': [
+            (state['player_y'], state['player_x']),
+            (state['player_y'], state['player_x'] + 1),
+            (state['player_y'] + 1, state['player_x']),
+            (state['player_y'] + 1, state['player_x'] + 1),
+            (state['player_y'] + 2, state['player_x']),
+            (state['player_y'] + 2, state['player_x'] + 1),
+        ],
+        'legs': [
+            (state['player_y'] + 3, state['player_x']),
+            (state['player_y'] + 3, state['player_x']+1),
+        ]
+    }
+
+    return player
 
 def create_matrix(rows,cols):
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
@@ -45,7 +55,6 @@ def handle_input():
                 state['is_screen_visible'] = False
                 time.sleep(1)
 
-
 def random_mines(matrix,amount_of_mines):
 
     while amount_of_mines >0:
@@ -65,19 +74,49 @@ def random_mines(matrix,amount_of_mines):
 
         amount_of_mines -= 1
 
-    for row in matrix:
-        print(row)
+    return matrix
+
+def append_player(player,matrix):
+    for location in player['body']:
+        matrix[location[0]][location[1]] = 'body'
+
+        if matrix[location[0]][location[1]] == 'flag':
+            print("You Won")
+
+    for location in player['legs']:
+        matrix[location[0]][location[1]] = 'legs'
+
+        if matrix[location[0]][location[1]] == 'mine':
+            print("You Lost")
+
+    return matrix
+
+
+def clean_player_location(player,matrix):
+    for location in player['body']:
+        matrix[location[0]][location[1]] = '0'
+
+    for location in player['legs']:
+        matrix[location[0]][location[1]] = '0'
+
+    return matrix
+
 
 def main():
     pygame.init()
+
     matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)
 
     while state['game_state'] == 'running':
 
+        player = get_player_location(state)
+        matrix = clean_player_location(player, matrix)
+
         handle_input()
 
-        Screen.draw_game(state)
+        player = get_player_location(state)
+        matrix = append_player(player,matrix)
 
 if __name__ == "__main__":
     main()
