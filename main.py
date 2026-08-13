@@ -2,6 +2,7 @@ import time
 import consts
 import Screen
 import pygame
+import random
 
 state = {
     'player_x' : 0,
@@ -9,6 +10,14 @@ state = {
     'player_state' : 'healthy',
     'game_state' : 'running',
     'is_screen_visible' : True
+}
+
+player = {
+    'body' : [
+        (state['player_y'],state['player_x']), #0,0
+        (state['player_y'],state['player_x']+1),#0,1
+        state['player_y']
+    ]
 }
 
 def create_matrix(rows,cols):
@@ -37,13 +46,33 @@ def handle_input():
                 time.sleep(1)
 
 
-def random_mines(matrix,amount):
-    pass
+def random_mines(matrix,amount_of_mines):
+
+    while amount_of_mines >0:
+        mine_x = random.randrange(1,consts.MATRIX_COLS-1)
+        mine_y = random.randrange(0,consts.MATRIX_ROWS)
+
+        while 0 <= mine_x <= 2 and 0 <= mine_y <= 4:
+            mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
+            mine_y = random.randrange(0, consts.MATRIX_ROWS)
+
+        if 'mine' in (matrix[mine_y][mine_x],matrix[mine_y][mine_x]):
+            continue
+
+        matrix[mine_y][mine_x] = 'mine'
+        matrix[mine_y][mine_x-1] = 'mine'
+        matrix[mine_y][mine_x+1] = 'mine'
+
+        amount_of_mines -= 1
+
+    for row in matrix:
+        print(row)
 
 def main():
-
+    pygame.init()
     matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)
+
     while state['game_state'] == 'running':
 
         handle_input()
