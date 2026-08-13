@@ -20,3 +20,5 @@ GRASS_IMAGE = 'pictures/bin/grass.png'
 FLAG_IMAGE = 'pictures/bin/flag.png'
 MINE_IMAGE = 'pictures/bin/mine.png'
 EXPLOSION_IMAGE = 'pictures/bin/explosion.png'
+
+AMOUNT_OF_MINES = 20
