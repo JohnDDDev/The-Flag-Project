@@ -2,13 +2,16 @@ import consts
 import Screen
 import pygame
 import random
+import time
 
 state = {
     'player_x' : 0,
     'player_y' : 0,
     'player_state' : 'healthy',
     'game_state' : 'running',
-    'is_screen_visible' : True
+    'is_screen_visible' : True,
+    'flag_x' : consts.MATRIX_ROWS-4,
+    'flag_y' : consts.MATRIX_COLS-3,
 }
 
 def get_player_location(state):
@@ -74,16 +77,16 @@ def random_mines(matrix,amount_of_mines):
 
 def append_player(player,matrix):
     for location in player['body']:
-        matrix[location[0]][location[1]] = 'body'
-
         if matrix[location[0]][location[1]] == 'flag':
             print("You Won")
 
-    for location in player['legs']:
-        matrix[location[0]][location[1]] = 'legs'
+        matrix[location[0]][location[1]] = 'body'
 
+    for location in player['legs']:
         if matrix[location[0]][location[1]] == 'mine':
             print("You Lost")
+
+        matrix[location[0]][location[1]] = 'legs'
 
     return matrix
 
@@ -114,6 +117,11 @@ def main():
         matrix = append_player(player,matrix)
 
         Screen.draw_game(state)
+
+        if state['is_screen_visible'] == False:
+            time.sleep(1)
+            state['is_screen_visible'] =True
+
 
 if __name__ == "__main__":
     main()
