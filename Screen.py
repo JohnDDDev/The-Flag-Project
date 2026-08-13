@@ -72,3 +72,4 @@ def draw_game(state):
     draw_flag(state['flag_x'],state['flag_y'])
     pygame.display.flip()
     clock.tick(60)
+

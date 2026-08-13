@@ -37,7 +37,6 @@ def create_matrix(rows,cols):
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
 
-
 def handle_input():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
