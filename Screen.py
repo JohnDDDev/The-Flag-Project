@@ -1,4 +1,6 @@
 import pygame
+from pygame.gfxdraw import pixel
+
 import consts
 
 consts.PLAYER_IMAGE = pygame.image.load(consts.PLAYER_IMAGE)
@@ -34,6 +36,18 @@ def draw_player(x,y):
     pixel_y= y * consts.TILE_SIZE
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
+def flag_surface(screen):
+    width= 4 * consts.TILE_SIZE
+    height= 3 * consts.TILE_SIZE
+    sized_image = pygame.transform.scale(consts.FLAG_IMAGE, (width, height))
+    return sized_image
+
+def draw_flag(x1,y1):
+    flag_surface_place = flag_surface(screen)
+    pixel_1= x1 * consts.FLAG_IMAGE*consts.TILE_SIZE
+    pixel_2= y1 * consts.TILE_SIZE
+    screen.blit(flag_surface_place,pixel_1, pixel_2)
+
 # def create_player(player_image):
 #     player_image=pygame.image.load(player_image)
 #     sized_player_image = pygame.transform.scale(player_image, (2,6))
@@ -52,5 +66,6 @@ def draw_game(state):
         draw_grid(screen)
 
     draw_player(state['player_x'],state['player_y'])
+    draw_flag(state['flags_x'],state['flags_y'])
     pygame.display.flip()
     clock.tick(10)
