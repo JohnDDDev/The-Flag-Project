@@ -3,11 +3,13 @@ import Screen
 import pygame
 import random
 import time
+import threading
 
 state = {
     'player_x' : 0,
     'player_y' : 0,
     'player_state' : 'healthy',
+    'enable_input' : True,
     'game_state' : 'running',
     'is_screen_visible' : True,
     'flag_x' : consts.MATRIX_COLS-4,
@@ -31,7 +33,6 @@ def get_player_location(state):
     }
 
     return player
-
 
 def create_matrix(rows,cols):
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
@@ -85,7 +86,8 @@ def append_player(player,matrix):
 
     for location in player['legs']:
         if matrix[location[0]][location[1]] == 'mine':
-            print("You Lost")
+            print('mine')
+            state['player_state'] = 'injured'
 
         matrix[location[0]][location[1]] = 'legs'
 
@@ -103,6 +105,8 @@ def clean_player_location(player,matrix):
 
 def main():
     pygame.init()
+
+    threading.Thread(target=handle_input).start()
 
     matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)

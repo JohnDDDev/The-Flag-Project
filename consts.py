@@ -14,11 +14,11 @@ WINDOW_WIDTH = MATRIX_COLS * TILE_SIZE
 BACKGROUND_COLOR = (71, 112, 7)
 
 #תמונות
-PLAYER_IMAGE = 'pictures/bin/soldier.png'
-INJURED_PLAYER_IMAGE = 'pictures/bin/injury.png'
-GRASS_IMAGE = 'pictures/bin/grass.png'
-FLAG_IMAGE = 'pictures/bin/flag.png'
-MINE_IMAGE = 'pictures/bin/mine.png'
-EXPLOSION_IMAGE = 'pictures/bin/explosion.png'
+PLAYER_IMAGE = "soldier.png"
+INJURED_PLAYER_IMAGE = "injury.png"
+GRASS_IMAGE = "grass.png"
+FLAG_IMAGE = "flag.png"
+MINE_IMAGE = "mine.png"
+EXPLOSION_IMAGE = "explosion.png"
 
-AMOUNT_OF_MINES = 20
+AMOUNT_OF_MINES = 30

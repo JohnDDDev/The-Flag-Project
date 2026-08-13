@@ -1,10 +1,11 @@
-import pygame
-from pygame.gfxdraw import pixel
+import threading
 
+import pygame
 import consts
 
 consts.PLAYER_IMAGE = pygame.image.load(consts.PLAYER_IMAGE)
 clock = pygame.time.Clock()
+player = pygame.image.load("soldier.png")
 
 def create_screen():
     global screen
@@ -24,8 +25,9 @@ def draw_grid(screen):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
             pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
 
+
+
 def player_surface():
-    player = pygame.image.load('pictures/bin/soldier.png')
     width = 2 * consts.TILE_SIZE
     height = 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(player, (width, height))
@@ -33,12 +35,12 @@ def player_surface():
 
 def draw_player(x,y):
     player_surface_place = player_surface()
-    pixel_x= x * consts.TILE_SIZE-1
-    pixel_y= y * consts.TILE_SIZE-1
+    pixel_x= x * consts.TILE_SIZE
+    pixel_y= y * consts.TILE_SIZE
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 def flag_surface():
-    flag = pygame.image.load('pictures/bin/flag.png')
+    flag = pygame.image.load(consts.FLAG_IMAGE)
     width= 4 * consts.TILE_SIZE
     height= 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
@@ -60,16 +62,30 @@ def draw_flag(x1,y1):
 
 #הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
 
-screen = create_screen()
+def draw_message(message, font_size, color, location):
+    font = pygame.font.SysFont('arial', font_size)
+    text_img = font.render(message, True, color)
+    screen.blit(text_img, location)
 
+def draw_lost_massage():
+    draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
+
+screen = create_screen()
 def draw_game(state):
-    if state['is_screen_visible']:
-        draw_background(screen)
-    else:
+    global player
+    draw_background(screen)
+    if not state['is_screen_visible']:
         draw_grid(screen)
 
     draw_player(state['player_x'],state['player_y'])
     draw_flag(state['flag_x'],state['flag_y'])
+
+    if state['player_state'] == 'injured':
+        player = pygame.image.load("injury.png")
+        draw_lost_massage()
+
     pygame.display.flip()
+
+
     clock.tick(60)
 
