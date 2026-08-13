@@ -1,7 +1,8 @@
 import pygame
 import consts
-import main
 
+consts.PLAYER_IMAGE = pygame.image.load(consts.PLAYER_IMAGE)
+clock = pygame.time.Clock()
 
 def create_screen():
     global screen
@@ -10,10 +11,10 @@ def create_screen():
     pygame.display.set_caption("the game ")
     return screen
 
-def drew_background(screen):
+def draw_background(screen):
     screen.fill(consts.BACKGROUND_COLOR)
 
-def drew_grid(screen):
+def draw_grid(screen):
     for row in range(consts.WINDOW_HEIGHT):
         for col in range(consts.WINDOW_WIDTH):
             x = col * consts.TILE_SIZE
@@ -21,15 +22,13 @@ def drew_grid(screen):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
             pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
 
-consts.PLAYER_IMAGE =pygame.image.load(consts.PLAYER_IMAGE)
-
 def player_surface():
     width = 2 * consts.TILE_SIZE
     height = 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(consts.PLAYER_IMAGE, (width, height))
     return sized_image
 
-def drew_player(x,y):
+def draw_player(x,y):
     player_surface_place = player_surface()
     pixel_x= x * consts.TILE_SIZE
     pixel_y= y * consts.TILE_SIZE
@@ -44,8 +43,14 @@ def drew_player(x,y):
 #     return player_image_box
 
 #הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
+
 def draw_game(state):
-    drew_background(screen)
-    drew_grid(screen)
-    drew_player(screen, state['center_x'],state['center_y'])
+    screen = create_screen()
+    if state['is_screen_visible']:
+        draw_background(screen)
+    else:
+        draw_grid(screen)
+
+    draw_player(state['player_x'],state['player_y'])
     pygame.display.flip()
+    clock.tick(10)

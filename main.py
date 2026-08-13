@@ -1,4 +1,3 @@
-import time
 import consts
 import Screen
 import pygame
@@ -36,7 +35,6 @@ def create_matrix(rows,cols):
 
 def handle_input():
     for event in pygame.event.get():
-
         if event.type == pygame.QUIT:
             pygame.quit()
 
@@ -46,17 +44,15 @@ def handle_input():
             elif event.key == pygame.K_RIGHT:
                 state['player_x'] += 1
             elif event.key == pygame.K_UP:
-                state['player_y'] += 1
-            elif event.key == pygame.K_DOWN:
                 state['player_y'] -= 1
+            elif event.key == pygame.K_DOWN:
+                state['player_y'] += 1
 
             # כוח לעשות את הלוח שקוף ולראות את המוקשים
             elif event.key == pygame.K_RETURN:
                 state['is_screen_visible'] = False
-                time.sleep(1)
 
 def random_mines(matrix,amount_of_mines):
-
     while amount_of_mines >0:
         mine_x = random.randrange(1,consts.MATRIX_COLS-1)
         mine_y = random.randrange(0,consts.MATRIX_ROWS)
@@ -65,7 +61,7 @@ def random_mines(matrix,amount_of_mines):
             mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
             mine_y = random.randrange(0, consts.MATRIX_ROWS)
 
-        if 'mine' in (matrix[mine_y][mine_x],matrix[mine_y][mine_x]):
+        if 'mine' in (matrix[mine_y][mine_x-1],matrix[mine_y][mine_x+1],matrix[mine_y][mine_x]):
             continue
 
         matrix[mine_y][mine_x] = 'mine'
@@ -90,7 +86,6 @@ def append_player(player,matrix):
             print("You Lost")
 
     return matrix
-
 
 def clean_player_location(player,matrix):
     for location in player['body']:
@@ -117,6 +112,8 @@ def main():
 
         player = get_player_location(state)
         matrix = append_player(player,matrix)
+
+        Screen.draw_game(state)
 
 if __name__ == "__main__":
     main()
