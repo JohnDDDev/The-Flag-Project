@@ -1,5 +1,7 @@
 import pygame
 import consts
+import main
+
 
 def create_screen():
     global screen
@@ -19,6 +21,19 @@ def drew_grid(screen):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
             pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
 
+consts.PLAYER_IMAGE =pygame.image.load(consts.PLAYER_IMAGE)
+
+def player_surface():
+    width = 2 * consts.TILE_SIZE
+    height = 3 * consts.TILE_SIZE
+    sized_image = pygame.transform.scale(consts.PLAYER_IMAGE, (width, height))
+    return sized_image
+
+def drew_player(x,y):
+    player_surface_place = player_surface()
+    pixel_x= x * consts.TILE_SIZE
+    pixel_y= y * consts.TILE_SIZE
+    screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 # def create_player(player_image):
 #     player_image=pygame.image.load(player_image)
@@ -28,12 +43,9 @@ def drew_grid(screen):
 #     print(player_image_box)
 #     return player_image_box
 
-
-
-def change_size():
-    pass
-
-# #הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
-# def draw_game(state):
-#     create_player(consts.PLAYER_IMAGE)
-#     pygame.display.flip()
+#הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
+def draw_game(state):
+    drew_background(screen)
+    drew_grid(screen)
+    drew_player(screen, state['center_x'],state['center_y'])
+    pygame.display.flip()
