@@ -3,9 +3,9 @@ import threading
 import pygame
 import consts
 
-consts.PLAYER_IMAGE = pygame.image.load(consts.PLAYER_IMAGE)
+player = pygame.image.load(consts.PLAYER_IMAGE)
 clock = pygame.time.Clock()
-player = pygame.image.load("soldier.png")
+# player = pygame.image.load("soldier.png")
 
 def create_screen():
     global screen
@@ -81,7 +81,7 @@ def draw_game(state):
     draw_flag(state['flag_x'],state['flag_y'])
 
     if state['player_state'] == 'injured':
-        player = pygame.image.load("injury.png")
+        player = pygame.image.load(consts.INJURED_PLAYER_IMAGE)
         draw_lost_massage()
 
     pygame.display.flip()
