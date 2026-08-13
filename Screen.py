@@ -25,7 +25,7 @@ def draw_grid(screen):
             pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
 
 def player_surface():
-    player = pygame.image.load(consts.PLAYER_IMAGE)
+    player = pygame.image.load('pictures/bin/soldier.png')
     width = 2 * consts.TILE_SIZE
     height = 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(player, (width, height))
@@ -33,12 +33,12 @@ def player_surface():
 
 def draw_player(x,y):
     player_surface_place = player_surface()
-    pixel_x= x * consts.TILE_SIZE
-    pixel_y= y * consts.TILE_SIZE
+    pixel_x= x * consts.TILE_SIZE-1
+    pixel_y= y * consts.TILE_SIZE-1
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 def flag_surface():
-    flag = pygame.image.load(consts.FLAG_IMAGE)
+    flag = pygame.image.load('pictures/bin/flag.png')
     width= 4 * consts.TILE_SIZE
     height= 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
@@ -46,9 +46,9 @@ def flag_surface():
 
 def draw_flag(x1,y1):
     flag_surface_place = flag_surface()
-    pixel_1= x1 * consts.FLAG_IMAGE*consts.TILE_SIZE
-    pixel_2= y1 * consts.TILE_SIZE
-    screen.blit(flag_surface_place,pixel_1, pixel_2)
+    pixel_1 = x1 * consts.TILE_SIZE
+    pixel_2 = y1 * consts.TILE_SIZE
+    screen.blit(flag_surface_place,(pixel_1, pixel_2))
 
 # def create_player(player_image):
 #     player_image=pygame.image.load(player_image)
@@ -60,8 +60,9 @@ def draw_flag(x1,y1):
 
 #הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
 
+screen = create_screen()
+
 def draw_game(state):
-    screen = create_screen()
     if state['is_screen_visible']:
         draw_background(screen)
     else:
@@ -70,4 +71,4 @@ def draw_game(state):
     draw_player(state['player_x'],state['player_y'])
     draw_flag(state['flag_x'],state['flag_y'])
     pygame.display.flip()
-    clock.tick(10)
+    clock.tick(60)

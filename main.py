@@ -10,8 +10,8 @@ state = {
     'player_state' : 'healthy',
     'game_state' : 'running',
     'is_screen_visible' : True,
-    'flag_x' : consts.MATRIX_ROWS-4,
-    'flag_y' : consts.MATRIX_COLS-3,
+    'flag_x' : consts.MATRIX_COLS-4,
+    'flag_y' : consts.MATRIX_ROWS-3,
 }
 
 def get_player_location(state):
@@ -32,9 +32,11 @@ def get_player_location(state):
 
     return player
 
+
 def create_matrix(rows,cols):
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
+
 
 def handle_input():
     for event in pygame.event.get():
