@@ -25,9 +25,10 @@ def draw_grid(screen):
             pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
 
 def player_surface():
+    player = pygame.image.load(consts.PLAYER_IMAGE)
     width = 2 * consts.TILE_SIZE
     height = 3 * consts.TILE_SIZE
-    sized_image = pygame.transform.scale(consts.PLAYER_IMAGE, (width, height))
+    sized_image = pygame.transform.scale(player, (width, height))
     return sized_image
 
 def draw_player(x,y):
@@ -36,14 +37,15 @@ def draw_player(x,y):
     pixel_y= y * consts.TILE_SIZE
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
-def flag_surface(screen):
+def flag_surface():
+    flag = pygame.image.load(consts.FLAG_IMAGE)
     width= 4 * consts.TILE_SIZE
     height= 3 * consts.TILE_SIZE
-    sized_image = pygame.transform.scale(consts.FLAG_IMAGE, (width, height))
+    sized_image = pygame.transform.scale(flag, (width, height))
     return sized_image
 
 def draw_flag(x1,y1):
-    flag_surface_place = flag_surface(screen)
+    flag_surface_place = flag_surface()
     pixel_1= x1 * consts.FLAG_IMAGE*consts.TILE_SIZE
     pixel_2= y1 * consts.TILE_SIZE
     screen.blit(flag_surface_place,pixel_1, pixel_2)
@@ -66,6 +68,6 @@ def draw_game(state):
         draw_grid(screen)
 
     draw_player(state['player_x'],state['player_y'])
-    draw_flag(state['flags_x'],state['flags_y'])
+    draw_flag(state['flag_x'],state['flag_y'])
     pygame.display.flip()
     clock.tick(10)
