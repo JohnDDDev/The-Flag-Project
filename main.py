@@ -69,7 +69,6 @@ def clean_player_location(player,matrix):
 
 def main():
     pygame.init()
-
     matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)
 
@@ -80,15 +79,13 @@ def main():
 
         soldier.handle_input(state)
 
+        if state['is_screen_visible'] == False and time.time() - state['Timer']  > 1:
+            state['is_screen_visible'] = True
+
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
         Screen.draw_game(state)
-
-        if state['is_screen_visible'] == False:
-            time.sleep(1)
-            state['is_screen_visible'] =True
-
 
 if __name__ == "__main__":
     main()
