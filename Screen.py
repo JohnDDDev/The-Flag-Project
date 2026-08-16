@@ -3,6 +3,7 @@ import consts
 
 player = pygame.image.load(consts.PLAYER_IMAGE)
 flag = pygame.image.load(consts.FLAG_IMAGE)
+bush= pygame.image.load(consts.GRASS_IMAGE)
 clock = pygame.time.Clock()
 
 def create_screen():
@@ -21,6 +22,31 @@ def draw_grid(screen):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
             pygame.draw.rect(screen, consts.LINES_COLOR, rect, 1)
+
+
+def random_bushes(amount_of_bushes):
+    while amount_of_bushes > 0:
+        bush_x = random.randrange(1, consts.MATRIX_COLS-1)
+        bush_y = random.randrange(0, consts.MATRIX_ROWS)
+        while ((0 <= bush_x <= 2 and 0 <= bush_y<= 4) or
+               (bush_x>= consts.MATRIX_COLS - 4 and bush_y >= consts.MATRIX_ROWS - 3)):
+            bush_x = random.randrange(1, consts.MATRIX_COLS - 1)
+            bush_y = random.randrange(0, consts.MATRIX_ROWS)
+
+            matrix[bush_x][bush_y] = "bush"
+            amount_of_bushes -=1
+
+def bush():
+    width = 2 * consts.TILE_SIZE
+    height = 2 * consts.TILE_SIZE
+    sized_image = pygame.transform.scale(bush, (width, height))
+    return sized_image
+
+def drew_bush():
+    bush_surface_place = bush()
+    pixel_x = 2 * consts.TILE_SIZE
+    pixel_y = 2 * consts.TILE_SIZE
+    screen.blit(bush_surface_place, (pixel_x, pixel_y))
 
 def player_surface():
     width = 2 * consts.TILE_SIZE
@@ -69,6 +95,7 @@ def draw_game(state):
         draw_win_massage()
 
     draw_background(screen,consts.BACKGROUND_COLOR)
+
     if not state['is_screen_visible']:
         draw_grid(screen)
 
