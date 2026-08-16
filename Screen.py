@@ -14,10 +14,11 @@ def create_screen():
     pygame.display.set_caption("the game ")
     return screen
 
-def draw_background(screen):
-    screen.fill(consts.BACKGROUND_COLOR)
+def draw_background(screen,color):
+    screen.fill(color)
 
 def draw_grid(screen):
+    draw_background(screen,consts.GRID_COLOR)
     for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
@@ -69,7 +70,7 @@ screen = create_screen()
 
 def draw_game(state):
     global player
-    draw_background(screen)
+    draw_background(screen,consts.BACKGROUND_COLOR)
     if not state['is_screen_visible']:
         draw_grid(screen)
 
