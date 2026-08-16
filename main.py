@@ -13,6 +13,7 @@ state = {
     'game_state' : 'running',
     'is_screen_visible' : True,
     'Timer' : 0,
+    'Timer_exit' : 0,
     'flag_x' : consts.MATRIX_COLS-4,
     'flag_y' : consts.MATRIX_ROWS-3,
 }
@@ -54,8 +55,7 @@ def append_player(player,matrix):
             state['player_state'] = 'injured'
             Screen.draw_lost_massage()
             state['enable_input'] = False
-            time.sleep(3)
-            pygame.quit()
+            state['Timer_exit'] = time.time()
 
         matrix[location[0]][location[1]] = 'legs'
 
@@ -70,6 +70,8 @@ def clean_player_location(player,matrix):
 
     return matrix
 
+def add_flag():
+    pass
 
 def main():
     pygame.init()
@@ -86,6 +88,9 @@ def main():
         if state['is_screen_visible'] == False and time.time() - state['Timer']  > 1:
             state['is_screen_visible'] = True
             state['player_state'] = 'healthy'
+
+        if state['Timer_exit'] and time.time() - state['Timer_exit'] > 3:
+            quit()
 
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)

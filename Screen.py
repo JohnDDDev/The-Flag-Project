@@ -1,5 +1,3 @@
-import threading
-
 import pygame
 import consts
 
@@ -48,16 +46,6 @@ def draw_flag(x1,y1):
     pixel_2 = y1 * consts.TILE_SIZE
     screen.blit(flag_surface_place,(pixel_1, pixel_2))
 
-# def create_player(player_image):
-#     player_image=pygame.image.load(player_image)
-#     sized_player_image = pygame.transform.scale(player_image, (2,6))
-#     player_image_box= pygame.Surface((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT*2),)
-#     player_image_box.blit(sized_player_image, (0, 0))
-#     print(player_image_box)
-#     return player_image_box
-
-#הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
-
 def draw_message(message, font_size, color, location):
     font = pygame.font.SysFont('arial', font_size)
     text_img = font.render(message, True, color)
@@ -66,11 +54,18 @@ def draw_message(message, font_size, color, location):
 def draw_lost_massage():
     draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
+def draw_win_massage():
+    pass
+
+def wellcome_massage():
+    pass
+
 screen = create_screen()
 
 def draw_game(state):
     global player
     draw_background(screen,consts.BACKGROUND_COLOR)
+
     if not state['is_screen_visible']:
         draw_grid(screen)
 
