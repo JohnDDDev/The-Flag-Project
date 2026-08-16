@@ -1,5 +1,3 @@
-import threading
-
 import pygame
 import consts
 
@@ -7,68 +5,64 @@ player = pygame.image.load(consts.PLAYER_IMAGE)
 flag = pygame.image.load(consts.FLAG_IMAGE)
 clock = pygame.time.Clock()
 
-def create_screen():
+def create_screen(): # יוצרים את המסך
     global screen
     pygame.init()
     screen= pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
     pygame.display.set_caption("the game ")
     return screen
 
-def draw_background(screen,color):
+def draw_background(screen,color):# לצבוע את הרקע
     screen.fill(color)
 
-def draw_grid(screen):
+def draw_grid(screen): #צובע את הרקע בשחוק , עובר על כל הריבועים ומצייר ריבועים בגודל של 1
     draw_background(screen,consts.GRID_COLOR)
     for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
             pygame.draw.rect(screen, consts.LINES_COLOR, rect, 1)
 
-def player_surface():
+def player_surface(): # ליצור את גודל השחקן
     width = 2 * consts.TILE_SIZE
     height = 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(player, (width, height))
     return sized_image
 
-def draw_player(x,y):
+def draw_player(x,y): # לצייר את השחקן על המסך
     player_surface_place = player_surface()
     pixel_x= x * consts.TILE_SIZE
     pixel_y= y * consts.TILE_SIZE
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
-def flag_surface():
+def flag_surface(): #להגדיר גודל של הדגל
     width= 4 * consts.TILE_SIZE
     height= 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
     return sized_image
 
-def draw_flag(x1,y1):
+def draw_flag(x1,y1): #לצייר את הדגל על המסך
     flag_surface_place = flag_surface()
     pixel_1 = x1 * consts.TILE_SIZE
     pixel_2 = y1 * consts.TILE_SIZE
     screen.blit(flag_surface_place,(pixel_1, pixel_2))
 
-# def create_player(player_image):
-#     player_image=pygame.image.load(player_image)
-#     sized_player_image = pygame.transform.scale(player_image, (2,6))
-#     player_image_box= pygame.Surface((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT*2),)
-#     player_image_box.blit(sized_player_image, (0, 0))
-#     print(player_image_box)
-#     return player_image_box
-
-#הפונקציה הראשית של המשחק על הלוח(הציור של המשחק)
-
-def draw_message(message, font_size, color, location):
+def draw_message(message, font_size, color, location): # לצייר את כל ההודעות המוקדמות
     font = pygame.font.SysFont('arial', font_size)
     text_img = font.render(message, True, color)
     screen.blit(text_img, location)
 
-def draw_lost_massage():
+def draw_lost_massage(): #הודעת הפסד
     draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
-screen = create_screen()
+def draw_win_massage():
+    pass
 
-def draw_game(state):
+def wellcome_massage():
+    draw_message('wellcome to the game', 10 , 'white', (10,10))
+
+screen = create_screen() #ליצור מסך
+
+def draw_game(state):# לצבוע ולנהל את המשחק
     global player
     draw_background(screen,consts.BACKGROUND_COLOR)
     if not state['is_screen_visible']:

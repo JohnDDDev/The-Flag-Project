@@ -2,7 +2,7 @@ import pygame
 import consts
 import time
 
-def get_player_location(state):
+def get_player_location(state): #מיקום השחקן
     player = {
         'body': [
             (state['player_y'], state['player_x']),
@@ -19,7 +19,7 @@ def get_player_location(state):
     }
     return player
 
-def handle_input(state):
+def handle_input(state): #בדיקת מקשים
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
