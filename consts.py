@@ -13,7 +13,7 @@ WINDOW_WIDTH = MATRIX_COLS * TILE_SIZE
 #     צבע הלוח
 BACKGROUND_COLOR = (71, 112, 7)
 GRID_COLOR = (0,0,0)
-LINES_COLOR = (30,112,7)
+LINES_COLOR = (51, 77, 0)
 #תמונות
 PLAYER_IMAGE = "pictures/bin/soldier.png"
 INJURED_PLAYER_IMAGE = "pictures/bin/injury.png"
