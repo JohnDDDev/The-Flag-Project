@@ -28,7 +28,8 @@ def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצו�
         mine_x = random.randrange(1,consts.MATRIX_COLS-1)
         mine_y = random.randrange(0,consts.MATRIX_ROWS)
 
-        while 0 <= mine_x <= 2 and 0 <= mine_y <= 4: # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
+        while ((0 <= mine_x <= 2 and 0 <= mine_y <= 4) or
+               (mine_x >= consts.MATRIX_COLS - 4 and mine_y >= consts.MATRIX_ROWS - 3)): # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
             mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
             mine_y = random.randrange(0, consts.MATRIX_ROWS)
 
