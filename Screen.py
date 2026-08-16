@@ -14,14 +14,14 @@ def create_screen():
     pygame.display.set_caption("the game ")
     return screen
 
-def draw_background(screen , color):
-    screen.fill(color)
+def draw_background(screen):
+    screen.fill(consts.BACKGROUND_COLOR)
 
 def draw_grid(screen):
     for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
-            pygame.draw.rect(screen, (0,120,0), rect, 1)
+            pygame.draw.rect(screen, (255,255,255), rect, 1)
 
 def player_surface():
     width = 2 * consts.TILE_SIZE
