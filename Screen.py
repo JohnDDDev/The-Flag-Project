@@ -29,17 +29,16 @@ def draw_grid(screen):
 def random_bushes(amount_of_bushes):
     bushes=[]
     while amount_of_bushes > 0:
-        bush_x = random.randrange(1, consts.MATRIX_COLS-1)
-        bush_y = random.randrange(0, consts.MATRIX_ROWS)
+        bush_x = random.randrange(1, consts.MATRIX_COLS-2)
+        bush_y = random.randrange(0, consts.MATRIX_ROWS-2)
         while ((0 <= bush_x <= 2 and 0 <= bush_y<= 4) or
                (bush_x>= consts.MATRIX_COLS - 4 and bush_y >= consts.MATRIX_ROWS - 3)):
             bush_x = random.randrange(1, consts.MATRIX_COLS - 1)
             bush_y = random.randrange(0, consts.MATRIX_ROWS)
-            bushes.append((bush_x, bush_y))
+        bushes.append((bush_x, bush_y))
         #matrix[bush_x][bush_y] = "bush"
-            amount_of_bushes -=1
-            drew_bush()
-
+        amount_of_bushes -=1
+    return bushes
 
 def bush_surface():
     width = 2 * consts.TILE_SIZE
@@ -47,10 +46,10 @@ def bush_surface():
     sized_image = pygame.transform.scale(bush, (width, height))
     return sized_image
 
-def drew_bush():
+def drew_bush(x,y):
     bush_surface_place = bush_surface()
-    pixel_x = 2 * consts.TILE_SIZE
-    pixel_y = 2 * consts.TILE_SIZE
+    pixel_x = x * consts.TILE_SIZE
+    pixel_y = y * consts.TILE_SIZE
     screen.blit(bush_surface_place, (pixel_x, pixel_y))
 
 def player_surface():
@@ -92,12 +91,16 @@ def wellcome_massage():
     draw_message('WellCome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
 
 screen = create_screen()
+bushes = random_bushes(consts.AMOUNT_OF_BUSHES)
 
-def draw_game(state):
+def draw_game(state,mines_locations):
     global player
 
     draw_background(screen,consts.BACKGROUND_COLOR)
-    random_bushes(consts.AMOUNT_OF_BUSHES)
+
+    for i in bushes:
+        drew_bush(i[0],i[1])
+
     if not state['is_screen_visible']:
         draw_grid(screen)
 

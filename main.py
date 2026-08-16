@@ -23,27 +23,28 @@ def create_matrix(rows,cols): # ליצור מטריקס
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
 
-# def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצורה רנדומלית
-#     while amount_of_mines >0:
-#         mine_x = random.randrange(1,consts.MATRIX_COLS-1)
-#         mine_y = random.randrange(0,consts.MATRIX_ROWS)
-#
-#         while ((0 <= mine_x <= 2 and 0 <= mine_y <= 4) or
-#                (mine_x >= consts.MATRIX_COLS - 4 and mine_y >= consts.MATRIX_ROWS - 3)): # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
-#
-#             mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
-#             mine_y = random.randrange(0, consts.MATRIX_ROWS)
-#
-#         if 'mine' in (matrix[mine_y][mine_x-1],matrix[mine_y][mine_x+1],matrix[mine_y][mine_x]):# בודק שהמקום שהפצצות לא אחד על השני
-#             continue
-#
-#         matrix[mine_y][mine_x] = 'mine'
-#         matrix[mine_y][mine_x-1] = 'mine'
-#         matrix[mine_y][mine_x+1] = 'mine'
-#
-#         amount_of_mines -= 1
-#
-#     return matrix
+def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצורה רנדומלית
+    mines_locations = []
+    while amount_of_mines >0:
+        mine_x = random.randrange(1,consts.MATRIX_COLS-1)
+        mine_y = random.randrange(0,consts.MATRIX_ROWS)
+
+        while ((0 <= mine_x <= 2 and 0 <= mine_y <= 4) or
+               (mine_x >= consts.MATRIX_COLS - 4 and mine_y >= consts.MATRIX_ROWS - 3)): # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
+
+            mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
+            mine_y = random.randrange(0, consts.MATRIX_ROWS)
+
+        if 'mine' in (matrix[mine_y][mine_x-1],matrix[mine_y][mine_x+1],matrix[mine_y][mine_x]):# בודק שהמקום שהפצצות לא אחד על השני
+            continue
+
+        matrix[mine_y][mine_x] = 'mine'
+        matrix[mine_y][mine_x-1] = 'mine'
+        matrix[mine_y][mine_x+1] = 'mine'
+        mines_locations.append((mine_y,mine_x-1))
+        amount_of_mines -= 1
+
+    return matrix ,mines_locations
 
 def append_player(player,matrix): # בודק את המיקום של גוף השחקן ורגליו ומכניס אותם למטריקס
     for location in player['body']:
@@ -82,8 +83,8 @@ def add_flag(matrix):
 
 def main():
     pygame.init()
-    matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
-    # matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)
+    matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
+    matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix = add_flag(matrix)
 
     while state['game_state'] == 'running':
@@ -103,7 +104,7 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        Screen.draw_game(state)
+        Screen.draw_game(state,mines_locations)
 
 if __name__ == "__main__":
     main()
