@@ -104,7 +104,9 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        Screen.draw_game(state,mines_locations)
+        (Screen.
+
+         draw_game(state,mines_locations))
 
 if __name__ == "__main__":
     main()
