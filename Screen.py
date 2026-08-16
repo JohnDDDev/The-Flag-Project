@@ -91,7 +91,7 @@ def draw_win_massage():
     draw_message('You won!',100,'green',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 def wellcome_massage():
-    draw_message('WellCome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
+    draw_message('Wellcome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
 
 screen = create_screen()
 bushes = random_bushes(consts.AMOUNT_OF_BUSHES)
@@ -146,4 +146,3 @@ def draw_game(state,mines_locations):
     pygame.display.flip()
 
     clock.tick(60)
-
