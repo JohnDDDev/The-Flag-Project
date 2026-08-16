@@ -30,7 +30,7 @@ def handle_input(state):
             if event.key == pygame.K_RETURN:
                 state['Timer'] = time.time()
                 state['is_screen_visible'] = False
-                state['player_state'] = ''
+                state['player_state'] = 'soldier_nigth'
                 continue
 
             if not state['is_screen_visible']:
@@ -51,3 +51,4 @@ def handle_input(state):
             elif event.key == pygame.K_DOWN:
                 if state['player_y'] < consts.MATRIX_ROWS - 3:
                     state['player_y'] += 1
+    print(state['player_x'],state['player_y']+3)

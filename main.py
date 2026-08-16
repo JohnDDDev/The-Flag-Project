@@ -81,6 +81,7 @@ def main():
 
         if state['is_screen_visible'] == False and time.time() - state['Timer']  > 1:
             state['is_screen_visible'] = True
+            state['player_state'] = 'healthy'
 
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)

@@ -16,6 +16,7 @@ GRID_COLOR = (0,0,0)
 LINES_COLOR = (51, 77, 0)
 #תמונות
 PLAYER_IMAGE = "pictures/bin/soldier.png"
+PLAYER_NIGTH = "pictures/bin/soldier_nigth.png"
 INJURED_PLAYER_IMAGE = "pictures/bin/injury.png"
 GRASS_IMAGE = "pictures/bin/grass.png"
 FLAG_IMAGE = "pictures/bin/flag.png"

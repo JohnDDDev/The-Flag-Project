@@ -80,9 +80,12 @@ def draw_game(state):
     if state['player_state'] == 'injured':
         player = pygame.image.load(consts.INJURED_PLAYER_IMAGE)
         draw_lost_massage()
+    elif state['player_state'] == 'soldier_nigth':
+        player = pygame.image.load(consts.PLAYER_NIGTH)
+    else:
+        player = pygame.image.load(consts.PLAYER_IMAGE)
 
     pygame.display.flip()
-
 
     clock.tick(60)
 
