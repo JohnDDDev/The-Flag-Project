@@ -27,6 +27,7 @@ def draw_grid(screen):
 
 
 def random_bushes(amount_of_bushes):
+    bushes=[]
     while amount_of_bushes > 0:
         bush_x = random.randrange(1, consts.MATRIX_COLS-1)
         bush_y = random.randrange(0, consts.MATRIX_ROWS)
@@ -34,18 +35,20 @@ def random_bushes(amount_of_bushes):
                (bush_x>= consts.MATRIX_COLS - 4 and bush_y >= consts.MATRIX_ROWS - 3)):
             bush_x = random.randrange(1, consts.MATRIX_COLS - 1)
             bush_y = random.randrange(0, consts.MATRIX_ROWS)
-
-            # matrix[bush_x][bush_y] = "bush"
+            bushes.append((bush_x, bush_y))
+        #matrix[bush_x][bush_y] = "bush"
             amount_of_bushes -=1
+            drew_bush()
 
-def bush():
+
+def bush_surface():
     width = 2 * consts.TILE_SIZE
     height = 2 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(bush, (width, height))
     return sized_image
 
 def drew_bush():
-    bush_surface_place = bush()
+    bush_surface_place = bush_surface()
     pixel_x = 2 * consts.TILE_SIZE
     pixel_y = 2 * consts.TILE_SIZE
     screen.blit(bush_surface_place, (pixel_x, pixel_y))
@@ -94,7 +97,7 @@ def draw_game(state):
     global player
 
     draw_background(screen,consts.BACKGROUND_COLOR)
-
+    random_bushes(consts.AMOUNT_OF_BUSHES)
     if not state['is_screen_visible']:
         draw_grid(screen)
 
