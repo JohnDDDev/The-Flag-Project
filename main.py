@@ -41,7 +41,7 @@ def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצו�
         matrix[mine_y][mine_x] = 'mine'
         matrix[mine_y][mine_x-1] = 'mine'
         matrix[mine_y][mine_x+1] = 'mine'
-        mines_locations.append((mine_y,mine_x-1))
+        mines_locations.append((mine_x-1,mine_y))
         amount_of_mines -= 1
 
     return matrix ,mines_locations
@@ -86,7 +86,7 @@ def main():
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix = add_flag(matrix)
-
+    print(mines_locations)
     while state['game_state'] == 'running':
 
         player = soldier.get_player_location(state)
@@ -104,9 +104,7 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        (Screen.
-
-         draw_game(state,mines_locations))
+        Screen.draw_game(state,mines_locations)
 
 if __name__ == "__main__":
     main()

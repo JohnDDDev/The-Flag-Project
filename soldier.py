@@ -27,13 +27,13 @@ def handle_input(state): #בדיקת מקשים
 
         elif event.type == pygame.KEYDOWN and state['enable_input']:
 
+            if not state['is_screen_visible']:
+                continue
+
             if event.key == pygame.K_RETURN:
                 state['Timer'] = time.time()
                 state['is_screen_visible'] = False
                 state['player_state'] = 'soldier_nigth'
-                continue
-
-            if not state['is_screen_visible']:
                 continue
 
             if event.key == pygame.K_LEFT:

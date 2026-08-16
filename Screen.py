@@ -128,6 +128,8 @@ def draw_game(state,mines_locations):
         player = pygame.image.load(consts.PLAYER_NIGTH)
     elif state['player_state'] == 'won':
         draw_win_massage()
+    else:
+        player = pygame.image.load(consts.PLAYER_IMAGE)
 
     draw_player(state['player_x'],state['player_y'])
     wellcome_massage()
