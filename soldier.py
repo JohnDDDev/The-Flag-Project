@@ -30,6 +30,7 @@ def handle_input(state):
             if event.key == pygame.K_RETURN:
                 state['Timer'] = time.time()
                 state['is_screen_visible'] = False
+                state['player_state'] = ''
                 continue
 
             if not state['is_screen_visible']:
