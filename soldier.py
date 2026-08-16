@@ -38,11 +38,11 @@ def handle_input(state): #בדיקת מקשים
 
             if event.key == pygame.K_LEFT:
                 if state['player_x'] > 0:
-                    state['player_x'] -= 2
+                    state['player_x'] -= 1
 
             elif event.key == pygame.K_RIGHT:
                 if state['player_x'] < consts.MATRIX_COLS - 2:
-                    state['player_x'] += 2
+                    state['player_x'] += 1
 
             elif event.key == pygame.K_UP:
                 if state['player_y'] > 0:

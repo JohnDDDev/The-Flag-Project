@@ -1,5 +1,7 @@
+import time
 import pygame
 import consts
+import random
 
 player = pygame.image.load(consts.PLAYER_IMAGE)
 flag = pygame.image.load(consts.FLAG_IMAGE)
@@ -33,7 +35,7 @@ def random_bushes(amount_of_bushes):
             bush_x = random.randrange(1, consts.MATRIX_COLS - 1)
             bush_y = random.randrange(0, consts.MATRIX_ROWS)
 
-            matrix[bush_x][bush_y] = "bush"
+            # matrix[bush_x][bush_y] = "bush"
             amount_of_bushes -=1
 
 def bush():
@@ -78,10 +80,10 @@ def draw_message(message, font_size, color, location):
     screen.blit(text_img, location)
 
 def draw_lost_massage():
-    draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
+    draw_message('You Lost!',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 def draw_win_massage():
-    draw_message('you Won',100,'green',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
+    draw_message('You won!',100,'green',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 def wellcome_massage():
     draw_message('WellCome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
@@ -90,9 +92,6 @@ screen = create_screen()
 
 def draw_game(state):
     global player
-
-    if state['won_game']:
-        draw_win_massage()
 
     draw_background(screen,consts.BACKGROUND_COLOR)
 
@@ -106,11 +105,18 @@ def draw_game(state):
         draw_lost_massage()
     elif state['player_state'] == 'soldier_nigth':
         player = pygame.image.load(consts.PLAYER_NIGTH)
-    else:
-        player = pygame.image.load(consts.PLAYER_IMAGE)
+    elif state['player_state'] == 'won':
+        draw_win_massage()
 
     draw_player(state['player_x'],state['player_y'])
     wellcome_massage()
+
+    if state['won_game']:
+        state['won_game'] = False
+        state['player_state'] = 'won'
+        state['enable_input'] = False
+        state['Timer_exit'] = time.time()
+        print(state['Timer_exit'])
 
     pygame.display.flip()
 
