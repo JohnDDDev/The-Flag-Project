@@ -12,6 +12,7 @@ WINDOW_WIDTH = MATRIX_COLS * TILE_SIZE
 #צבעים
 #     צבע הלוח
 BACKGROUND_COLOR = (71, 112, 7)
+HIDE_SCREEN = (0,0,0)
 
 #תמונות
 PLAYER_IMAGE = "pictures/bin/soldier.png"
