@@ -5,7 +5,7 @@ import random
 import time
 import soldier
 
-state = {
+state = {     #המצב הרגעי של המשחק
     'player_x' : 0,
     'player_y' : 0,
     'player_state' : 'healthy',
@@ -18,20 +18,20 @@ state = {
     'flag_y' : consts.MATRIX_ROWS-3,
 }
 
-def create_matrix(rows,cols):
+def create_matrix(rows,cols): # ליצור מטריקס
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
 
-def random_mines(matrix,amount_of_mines):
+def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצורה רנדומלית
     while amount_of_mines >0:
         mine_x = random.randrange(1,consts.MATRIX_COLS-1)
         mine_y = random.randrange(0,consts.MATRIX_ROWS)
 
-        while 0 <= mine_x <= 2 and 0 <= mine_y <= 4:
+        while 0 <= mine_x <= 2 and 0 <= mine_y <= 4: # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
             mine_x = random.randrange(1, consts.MATRIX_COLS - 1)
             mine_y = random.randrange(0, consts.MATRIX_ROWS)
 
-        if 'mine' in (matrix[mine_y][mine_x-1],matrix[mine_y][mine_x+1],matrix[mine_y][mine_x]):
+        if 'mine' in (matrix[mine_y][mine_x-1],matrix[mine_y][mine_x+1],matrix[mine_y][mine_x]):# בודק שהמקום שהפצצות לא אחד על השני
             continue
 
         matrix[mine_y][mine_x] = 'mine'
@@ -42,7 +42,7 @@ def random_mines(matrix,amount_of_mines):
 
     return matrix
 
-def append_player(player,matrix):
+def append_player(player,matrix): # בודק את המיקום של גוף השחקן ורגליו ומכניס אותם למטריקס
     for location in player['body']:
         if matrix[location[0]][location[1]] == 'flag':
             print("You Won")
@@ -61,7 +61,7 @@ def append_player(player,matrix):
 
     return matrix
 
-def clean_player_location(player,matrix):
+def clean_player_location(player,matrix): #מנקה את מיקום השחקן במיקום הקודם שהיה
     for location in player['body']:
         matrix[location[0]][location[1]] = '0'
 
