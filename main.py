@@ -8,6 +8,7 @@ import soldier
 state = {     #המצב הרגעי של המשחק
     'player_x' : 0,
     'player_y' : 0,
+    'won_game' : False,
     'player_state' : 'healthy',
     'enable_input' : True,
     'game_state' : 'running',
@@ -45,7 +46,7 @@ def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצו�
 def append_player(player,matrix): # בודק את המיקום של גוף השחקן ורגליו ומכניס אותם למטריקס
     for location in player['body']:
         if matrix[location[0]][location[1]] == 'flag':
-            print("You Won")
+            state['won_game'] = True
 
         matrix[location[0]][location[1]] = 'body'
 

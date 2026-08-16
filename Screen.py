@@ -35,8 +35,8 @@ def draw_player(x,y):
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 def flag_surface():
-    width= 2 * consts.TILE_SIZE
-    height= 4 * consts.TILE_SIZE
+    width= 4 * consts.TILE_SIZE
+    height= 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
     return sized_image
 
@@ -55,17 +55,20 @@ def draw_lost_massage():
     draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 def draw_win_massage():
-    pass
+    draw_message('you Won',100,'green',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 def wellcome_massage():
-    pass
+    draw_message('WellCome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
 
 screen = create_screen()
 
 def draw_game(state):
     global player
-    draw_background(screen,consts.BACKGROUND_COLOR)
 
+    if state['won_game']:
+        draw_win_massage()
+
+    draw_background(screen,consts.BACKGROUND_COLOR)
     if not state['is_screen_visible']:
         draw_grid(screen)
 
@@ -80,6 +83,7 @@ def draw_game(state):
         player = pygame.image.load(consts.PLAYER_IMAGE)
 
     draw_player(state['player_x'],state['player_y'])
+    wellcome_massage()
 
     pygame.display.flip()
 
