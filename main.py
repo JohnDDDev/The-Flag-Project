@@ -52,6 +52,10 @@ def append_player(player,matrix):
         if matrix[location[0]][location[1]] == 'mine':
             print('mine')
             state['player_state'] = 'injured'
+            Screen.draw_lost_massage()
+            state['enable_input'] = False
+            time.sleep(3)
+            pygame.quit()
 
         matrix[location[0]][location[1]] = 'legs'
 
