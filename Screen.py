@@ -35,8 +35,8 @@ def draw_player(x,y):
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 def flag_surface():
-    width= 4 * consts.TILE_SIZE
-    height= 3 * consts.TILE_SIZE
+    width= 2 * consts.TILE_SIZE
+    height= 4 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
     return sized_image
 
