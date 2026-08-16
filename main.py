@@ -3,7 +3,7 @@ import Screen
 import pygame
 import random
 import time
-import threading
+import soldier
 
 state = {
     'player_x' : 0,
@@ -12,50 +12,14 @@ state = {
     'enable_input' : True,
     'game_state' : 'running',
     'is_screen_visible' : True,
+    'Timer' : 0,
     'flag_x' : consts.MATRIX_COLS-4,
     'flag_y' : consts.MATRIX_ROWS-3,
 }
 
-def get_player_location(state):
-    player = {
-        'body': [
-            (state['player_y'], state['player_x']),
-            (state['player_y'], state['player_x'] + 1),
-            (state['player_y'] + 1, state['player_x']),
-            (state['player_y'] + 1, state['player_x'] + 1),
-            (state['player_y'] + 2, state['player_x']),
-            (state['player_y'] + 2, state['player_x'] + 1),
-        ],
-        'legs': [
-            (state['player_y'] + 3, state['player_x']),
-            (state['player_y'] + 3, state['player_x']+1),
-        ]
-    }
-
-    return player
-
 def create_matrix(rows,cols):
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
-
-def handle_input():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                state['player_x'] -= 1
-            elif event.key == pygame.K_RIGHT:
-                state['player_x'] += 1
-            elif event.key == pygame.K_UP:
-                state['player_y'] -= 1
-            elif event.key == pygame.K_DOWN:
-                state['player_y'] += 1
-
-            # כוח לעשות את הלוח שקוף ולראות את המוקשים
-            elif event.key == pygame.K_RETURN:
-                state['is_screen_visible'] = False
 
 def random_mines(matrix,amount_of_mines):
     while amount_of_mines >0:
@@ -106,19 +70,17 @@ def clean_player_location(player,matrix):
 def main():
     pygame.init()
 
-    threading.Thread(target=handle_input).start()
-
     matrix = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix = random_mines(matrix,consts.AMOUNT_OF_MINES)
 
     while state['game_state'] == 'running':
 
-        player = get_player_location(state)
+        player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
 
-        handle_input()
+        soldier.handle_input(state)
 
-        player = get_player_location(state)
+        player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
         Screen.draw_game(state)
