@@ -62,7 +62,7 @@ def append_player(player,matrix): # בודק את המיקום של גוף הש�
             state['enable_input'] = False
             state['Timer_exit'] = time.time()
 
-        matrix[location[0]][location[1]] = 'legs'
+            matrix[location[0]][location[1]] = 'legs'
 
     return matrix
 

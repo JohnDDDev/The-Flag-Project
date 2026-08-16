@@ -49,5 +49,5 @@ def handle_input(state): #בדיקת מקשים
                     state['player_y'] -= 1
 
             elif event.key == pygame.K_DOWN:
-                if state['player_y']  < consts.MATRIX_ROWS - 3:
+                if state['player_y']  < consts.MATRIX_ROWS - 4:
                     state['player_y'] += 1
