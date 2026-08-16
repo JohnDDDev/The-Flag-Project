@@ -92,6 +92,8 @@ def wellcome_massage():
 
 screen = create_screen()
 bushes = random_bushes(consts.AMOUNT_OF_BUSHES)
+def draw_mine(x,y):
+    pass
 
 def draw_game(state,mines_locations):
     global player
