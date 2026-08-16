@@ -95,6 +95,7 @@ def wellcome_massage():
 
 screen = create_screen()
 bushes = random_bushes(consts.AMOUNT_OF_BUSHES)
+start_time = time.time()
 
 def mine_surface():
     width = 3 * consts.TILE_SIZE
@@ -132,7 +133,8 @@ def draw_game(state,mines_locations):
         player = pygame.image.load(consts.PLAYER_IMAGE)
 
     draw_player(state['player_x'],state['player_y'])
-    wellcome_massage()
+    if not time.time() - start_time >5:
+        wellcome_massage()
 
     if state['won_game']:
         state['won_game'] = False
