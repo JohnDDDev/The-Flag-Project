@@ -4,8 +4,8 @@ import pygame
 import consts
 
 player = pygame.image.load(consts.PLAYER_IMAGE)
+flag = pygame.image.load(consts.FLAG_IMAGE)
 clock = pygame.time.Clock()
-# player = pygame.image.load("soldier.png")
 
 def create_screen():
     global screen
@@ -18,14 +18,10 @@ def draw_background(screen):
     screen.fill(consts.BACKGROUND_COLOR)
 
 def draw_grid(screen):
-    for row in range(consts.WINDOW_HEIGHT):
-        for col in range(consts.WINDOW_WIDTH):
-            x = col * consts.TILE_SIZE
-            y = row * consts.TILE_SIZE
+    for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
+        for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
             rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
-            pygame.draw.rect(screen, consts.BACKGROUND_COLOR, rect)
-
-
+            pygame.draw.rect(screen, (255,255,255), rect, 1)
 
 def player_surface():
     width = 2 * consts.TILE_SIZE
@@ -40,7 +36,6 @@ def draw_player(x,y):
     screen.blit(player_surface_place, (pixel_x, pixel_y))
 
 def flag_surface():
-    flag = pygame.image.load(consts.FLAG_IMAGE)
     width= 4 * consts.TILE_SIZE
     height= 3 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(flag, (width, height))
@@ -71,6 +66,7 @@ def draw_lost_massage():
     draw_message('You Lost',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
 
 screen = create_screen()
+
 def draw_game(state):
     global player
     draw_background(screen)
