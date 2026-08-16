@@ -24,7 +24,7 @@ def draw_grid(screen):
 
 def player_surface():
     width = 2 * consts.TILE_SIZE
-    height = 3 * consts.TILE_SIZE
+    height = 4 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(player, (width, height))
     return sized_image
 
@@ -69,7 +69,6 @@ def draw_game(state):
     if not state['is_screen_visible']:
         draw_grid(screen)
 
-    draw_player(state['player_x'],state['player_y'])
     draw_flag(state['flag_x'],state['flag_y'])
 
     if state['player_state'] == 'injured':
@@ -79,6 +78,8 @@ def draw_game(state):
         player = pygame.image.load(consts.PLAYER_NIGTH)
     else:
         player = pygame.image.load(consts.PLAYER_IMAGE)
+
+    draw_player(state['player_x'],state['player_y'])
 
     pygame.display.flip()
 
