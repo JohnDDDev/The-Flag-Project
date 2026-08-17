@@ -3,7 +3,6 @@ import pygame
 import consts
 import time
 
-from fild import fild_game
 
 
 # import Database

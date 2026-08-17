@@ -1,11 +1,11 @@
+import Database
 import consts
 import Screen
-import pygame
 import random
-import time
 import soldier
-from Screen import random_bushes
-import fild
+import pygame
+import time
+import sys
 
 state = {     #המצב הרגעי של המשחק
     'player_x' : 0,
@@ -22,6 +22,7 @@ state = {     #המצב הרגעי של המשחק
 }
 
 current_game = {}
+keys_timer = {}
 
 def create_matrix(rows,cols): # ליצור מטריקס
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
@@ -86,17 +87,47 @@ def add_flag(matrix):
     return matrix
 
 def main():
-    global current_game
+    global current_game,state
     pygame.init()
+
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix = add_flag(matrix)
-    print(mines_locations)
+
+    bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
+
     while state['game_state'] == 'running':
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                state['game_state'] = 'exit'
+            elif event.type == pygame.KEYDOWN:
+                if pygame.K_1 <= event.key <= pygame.K_9:
+                    keys_timer[event.key] = time.time()
+            elif event.type == pygame.KEYUP:
+                if pygame.K_1 <= event.key <= pygame.K_9:
+                    slot_num= event.key - pygame.K_0
+                    if event.key in keys_timer:
+                        press_time = (time.time() - keys_timer[event.key])
+                        del keys_timer[event.key]
+
+                        if press_time <= 1.0:
+                            print(f"short press {press_time}")
+                            Database.save_game(slot_num, current_game)
+                        else:
+                            print(f"long press {press_time}")
+                            load_data = Database.load_game(slot_num)
+                            if load_data:
+                                state = load_data['state']
+                                matrix = load_data['matrix']
+                                bushes_locations = load_data['bushes_locations']
+                                mines_locations = load_data['mines_locations']
+                                print("game loaded successfully")
+
+        if state['enable_input']:
+            soldier.handle_input(state)
+
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
-
-        soldier.handle_input(state)
 
         if state['is_screen_visible'] == False and time.time() - state['Timer']  > 1:
             state['is_screen_visible'] = True
@@ -108,15 +139,16 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        Screen.draw_game(state,mines_locations)
-
         current_game = {
             'state': state,
             'matrix': matrix,
-            'bushes_locations': random_bushes(amount_of_bushes=consts.AMOUNT_OF_BUSHES),
-            'mines_locations': mines_locations}
+            'bushes_locations': bushes_locations,
+            'mines_locations': mines_locations
+        }
 
-
-
+        Screen.draw_game(state,mines_locations)
+        pygame.display.flip()
+    pygame.quit()
+    sys.exit()
 if __name__ == "__main__":
     main()

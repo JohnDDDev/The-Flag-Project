@@ -24,6 +24,7 @@ def load_game(slot):
     if slot in dataframe.index:
         data = dataframe.loc[slot, "game_data"]
         print(f"loaded save from {slot}")
+        data = dict(data)
         return data
     else:
         print(f"no save founded on slot {slot}")
