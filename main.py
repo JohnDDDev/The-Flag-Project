@@ -4,6 +4,8 @@ import pygame
 import random
 import time
 import soldier
+from Screen import random_bushes
+import fild
 
 state = {     #המצב הרגעי של המשחק
     'player_x' : 0,
@@ -106,14 +108,15 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        bushes_locations = Screen.draw_game(state,mines_locations)
+        Screen.draw_game(state,mines_locations)
 
-        curent_game = {
+        current_game = {
             'state': state,
             'matrix': matrix,
-            'bushes_locations': bushes_locations,
-            'mines_locations': mines_locations,
-        }
+            'bushes_locations': random_bushes(amount_of_bushes=consts.AMOUNT_OF_BUSHES),
+            'mines_locations': mines_locations}
+
+
 
 if __name__ == "__main__":
     main()
