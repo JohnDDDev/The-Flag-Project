@@ -1,15 +1,6 @@
-# import sys
 import pygame
 import consts
 import time
-
-
-
-# import Database
-# import main
-# from Database import save_game, load_game
-# from main import current_game
-
 
 def get_player_location(state): #מיקום השחקן
     player = {
