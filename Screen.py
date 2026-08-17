@@ -140,8 +140,6 @@ def draw_game(state,mines_locations,bushes=bushes_locations):
         state['won_game'] = False
         state['player_state'] = 'won'
         state['enable_input'] = False
-        state['Timer_exit'] = time.time()
-        print(state['Timer_exit'])
 
     pygame.display.flip()
     clock.tick(60)

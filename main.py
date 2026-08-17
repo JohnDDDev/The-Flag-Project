@@ -55,7 +55,6 @@ def append_player(player,matrix): # בודק את המיקום של גוף הש�
     for location in player['body']:
         if matrix[location[0]][location[1]] == 'flag':
             state['won_game'] = True
-            print('flag')
 
         matrix[location[0]][location[1]] = 'body'
 
@@ -95,9 +94,11 @@ def main():
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
     while state['game_state'] == 'running':
+
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
         matrix = add_flag(matrix)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state['game_state'] = 'exit'
