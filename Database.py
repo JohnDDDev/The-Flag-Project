@@ -30,7 +30,6 @@ def load_game(slot):
         print(f"no save founded on slot {slot}")
         return None
 
-
 def save_game(slot, data):
     dataframe = read_from_database()
 
