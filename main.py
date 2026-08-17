@@ -93,16 +93,41 @@ def main():
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix = add_flag(matrix)
-
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
     while state['game_state'] == 'running':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state['game_state'] = 'exit'
+
             elif event.type == pygame.KEYDOWN:
+
+                if state['enable_input']:
+                    if event.key == pygame.K_RETURN:
+                        state['Timer'] = time.time()
+                        state['is_screen_visible'] = False
+                        state['player_state'] = 'soldier_nigth'
+                        continue
+
+                    if event.key == pygame.K_LEFT:
+                        if state['player_x'] > 0:
+                            state['player_x'] -= 1
+
+                    elif event.key == pygame.K_RIGHT:
+                        if state['player_x'] < consts.MATRIX_COLS - 2:
+                            state['player_x'] += 1
+
+                    elif event.key == pygame.K_UP:
+                        if state['player_y'] > 0:
+                            state['player_y'] -= 1
+
+                    elif event.key == pygame.K_DOWN:
+                        if state['player_y'] < consts.MATRIX_ROWS - 4:
+                            state['player_y'] += 1
+
                 if pygame.K_1 <= event.key <= pygame.K_9:
                     keys_timer[event.key] = time.time()
+
             elif event.type == pygame.KEYUP:
                 if pygame.K_1 <= event.key <= pygame.K_9:
                     slot_num= event.key - pygame.K_0
@@ -122,9 +147,6 @@ def main():
                                 bushes_locations = load_data['bushes_locations']
                                 mines_locations = load_data['mines_locations']
                                 print("game loaded successfully")
-
-        if state['enable_input']:
-            soldier.handle_input(state)
 
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)

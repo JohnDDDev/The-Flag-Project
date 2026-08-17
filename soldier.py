@@ -39,25 +39,3 @@ def handle_input(state): #בדיקת מקשים
             if not state['is_screen_visible']:
                 continue
 
-            if event.key == pygame.K_RETURN:
-                state['Timer'] = time.time()
-                state['is_screen_visible'] = False
-                state['player_state'] = 'soldier_nigth'
-                continue
-
-            if event.key == pygame.K_LEFT:
-                if state['player_x'] > 0:
-                    state['player_x'] -= 1
-
-            elif event.key == pygame.K_RIGHT:
-                if state['player_x'] < consts.MATRIX_COLS - 2:
-                    state['player_x'] += 1
-
-            elif event.key == pygame.K_UP:
-                if state['player_y'] > 0:
-                    state['player_y'] -= 1
-
-            elif event.key == pygame.K_DOWN :
-                if state['player_y']  < consts.MATRIX_ROWS - 4:
-                    state['player_y'] += 1
-
