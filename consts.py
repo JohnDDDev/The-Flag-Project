@@ -26,5 +26,6 @@ PIT_IMAGE = 'pictures/bin/pit.png'
 
 AMOUNT_OF_MINES = 20
 AMOUNT_OF_BUSHES=20
+AMOUNT_OF_PITS = 5
 
 SAVE_FILE = 'dataset.csv'
