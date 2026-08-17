@@ -25,3 +25,5 @@ EXPLOSION_IMAGE = "pictures/bin/explosion.png"
 
 AMOUNT_OF_MINES = 20
 AMOUNT_OF_BUSHES=20
+
+SAVE_FILE = 'dataset.csv'
