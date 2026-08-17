@@ -95,10 +95,9 @@ def main():
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
     while state['game_state'] == 'running':
-        matrix = add_flag(matrix)
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
-
+        matrix = add_flag(matrix)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state['game_state'] = 'exit'
