@@ -8,6 +8,7 @@ flag = pygame.image.load(consts.FLAG_IMAGE)
 bush= pygame.image.load(consts.GRASS_IMAGE)
 clock = pygame.time.Clock()
 mine=pygame.image.load(consts.MINE_IMAGE)
+pit = pygame.image.load(consts.PIT_IMAGE)
 
 def create_screen():
     global screen
@@ -19,7 +20,7 @@ def create_screen():
 def draw_background(screen,color):
     screen.fill(color)
 
-def draw_grid(screen,mines_locations):
+def draw_grid(screen,mines_locations,pits_locations):
     draw_background(screen,consts.GRID_COLOR)
     for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
@@ -28,6 +29,8 @@ def draw_grid(screen,mines_locations):
     for j in mines_locations:
         draw_mine(j[0], j[1])
 
+    for j in pits_locations:
+        draw_pit(j[0],j[1])
 
 def random_bushes(amount_of_bushes):
     bushes=[]
@@ -97,6 +100,18 @@ screen = create_screen()
 bushes_locations = random_bushes(consts.AMOUNT_OF_BUSHES)
 start_time = time.time()
 
+def pit_surface():
+    width = 3 * consts.TILE_SIZE
+    height = 1 * consts.TILE_SIZE
+    sized_image = pygame.transform.scale(pit, (width, height))
+    return sized_image
+
+def draw_pit(x, y):
+    mine_surface_place = pit_surface()
+    pixel_x = x * consts.TILE_SIZE
+    pixel_y = y * consts.TILE_SIZE
+    screen.blit(mine_surface_place, (pixel_x, pixel_y))
+
 def mine_surface():
     width = 3 * consts.TILE_SIZE
     height = 1 * consts.TILE_SIZE
@@ -109,7 +124,7 @@ def draw_mine(x, y):
     pixel_y = y * consts.TILE_SIZE
     screen.blit(mine_surface_place, (pixel_x, pixel_y))
 
-def draw_game(state,mines_locations,bushes=bushes_locations):
+def draw_game(state,mines_locations,pits_locations,bushes=bushes_locations):
     global player
 
     draw_background(screen,consts.BACKGROUND_COLOR)
@@ -118,7 +133,7 @@ def draw_game(state,mines_locations,bushes=bushes_locations):
         drew_bush(i[0],i[1])
 
     if not state['is_screen_visible']:
-        draw_grid(screen , mines_locations)
+        draw_grid(screen , mines_locations,pits_locations)
 
     draw_flag(state['flag_x'],state['flag_y'])
 
