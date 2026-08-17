@@ -1,10 +1,9 @@
 import sys
-
 import pygame
 import consts
 import time
 import Database
-from Database import save_game, load_game
+import main
 
 keys_timer = {}
 
@@ -72,13 +71,10 @@ def handle_input(state): #בדיקת מקשים
 
                         if press_time<=1.0:
                             print(f"short press {press_time}")
-                            save_game(slot_num,curent_game)
+                            Database.save_game(slot_num,main.current_game)
 
                         else:
                             print(f"long press {press_time}")
-                            load_data=load_game(slot_num)
+                            load_data = Database.load_game(slot_num)
                             if load_data:
                                 print(f"data to aply :{load_data}")
-
-    pygame.quit()
-    sys.exit()

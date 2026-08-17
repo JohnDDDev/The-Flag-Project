@@ -19,6 +19,8 @@ state = {     #המצב הרגעי של המשחק
     'flag_y' : consts.MATRIX_ROWS-3,
 }
 
+current_game = {}
+
 def create_matrix(rows,cols): # ליצור מטריקס
     matrix = [[ '0' for _ in range(consts.MATRIX_COLS)] for _ in range(consts.MATRIX_ROWS) ]
     return matrix
@@ -82,13 +84,13 @@ def add_flag(matrix):
     return matrix
 
 def main():
+    global current_game
     pygame.init()
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix = add_flag(matrix)
     print(mines_locations)
     while state['game_state'] == 'running':
-
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
 
@@ -104,7 +106,14 @@ def main():
         player = soldier.get_player_location(state)
         matrix = append_player(player,matrix)
 
-        Screen.draw_game(state,mines_locations)
+        bushes_locations = Screen.draw_game(state,mines_locations)
+
+        curent_game = {
+            'state': state,
+            'matrix': matrix,
+            'bushes_locations': bushes_locations,
+            'mines_locations': mines_locations,
+        }
 
 if __name__ == "__main__":
     main()

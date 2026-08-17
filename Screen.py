@@ -94,7 +94,7 @@ def wellcome_massage():
     draw_message('Wellcome To The Flag Game!\nHave Fun ', 15, 'white', (20,20))
 
 screen = create_screen()
-bushes = random_bushes(consts.AMOUNT_OF_BUSHES)
+bushes_locations = random_bushes(consts.AMOUNT_OF_BUSHES)
 start_time = time.time()
 
 def mine_surface():
@@ -109,7 +109,7 @@ def draw_mine(x, y):
     pixel_y = y * consts.TILE_SIZE
     screen.blit(mine_surface_place, (pixel_x, pixel_y))
 
-def draw_game(state,mines_locations):
+def draw_game(state,mines_locations,bushes=bushes_locations):
     global player
 
     draw_background(screen,consts.BACKGROUND_COLOR)
@@ -144,5 +144,5 @@ def draw_game(state,mines_locations):
         print(state['Timer_exit'])
 
     pygame.display.flip()
-
     clock.tick(60)
+    return bushes
