@@ -2,7 +2,7 @@ import time
 import pygame
 import consts
 import random
-
+import Enemy
 player = pygame.image.load(consts.PLAYER_IMAGE)
 flag = pygame.image.load(consts.FLAG_IMAGE)
 bush= pygame.image.load(consts.GRASS_IMAGE)
@@ -89,20 +89,18 @@ def draw_message(message, font_size, color, location):
     text_img = font.render(message, True, color)
     screen.blit(text_img, location)
 
-# def dinosaur_surface():
-#     width = 2 * consts.TILE_SIZE
-#     height = 4 * consts.TILE_SIZE
-#     sized_image = pygame.transform.scale(dinosaur, (width, height))
-#     return sized_image
-#
-# def draw_dinosaur(x, y):
-#     dinosaur_surface_place = dinosaur_surface()
-#     pixel_x = x * consts.TILE_SIZE
-#     pixel_y = y * consts.TILE_SIZE
-#     screen.blit(dinosaur_surface_place, (pixel_x, pixel_y))
-#
 
+def dinosaur_surface():
+    width = 2 * consts.TILE_SIZE
+    height = 4 * consts.TILE_SIZE
+    sized_image = pygame.transform.scale(dinosaur, (width, height))
+    return sized_image
 
+def draw_dinosaur(x, y):
+    dinosaur_surface_place = dinosaur_surface()
+    pixel_x = x * consts.TILE_SIZE
+    pixel_y = y * consts.TILE_SIZE
+    screen.blit(dinosaur_surface_place, (pixel_x, pixel_y))
 
 def draw_lost_massage():
     draw_message('You Lost!',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
@@ -143,7 +141,6 @@ def draw_mine(x, y):
 
 def draw_game(state,mines_locations,pits_locations,bushes=bushes_locations):
     global player
-
     draw_background(screen,consts.BACKGROUND_COLOR)
 
     for i in bushes:

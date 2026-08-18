@@ -22,6 +22,8 @@ state = {     #המצב הרגעי של המשחק
     'Timer_exit' : 0,
     'flag_x' : consts.MATRIX_COLS-4,
     'flag_y' : consts.MATRIX_ROWS-3,
+    'dinosaur_x': 0,
+    'dinosaur_y': 22
 }
 
 current_game = {}
@@ -131,6 +133,7 @@ def main():
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
     matrix , pits_locations = teleport.add_pits(matrix,consts.AMOUNT_OF_PITS)
 
+
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
     empty_row_for_enemy = Enemy.find_empty_row(matrix)
@@ -197,7 +200,7 @@ def main():
         }
 
         Screen.draw_game(state,mines_locations,pits_locations,bushes_locations)
-        pygame.display.flip()
+
 
         if time.time() - one_second_loop > 1:
             one_second_loop = time.time()
@@ -210,13 +213,13 @@ def main():
                 print(f"walking Left --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
                 empty_row_for_enemy[0] -= 1
                 Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1],walk_right,state)
-                Enemy.draw_dinosaur(empty_row_for_enemy[0], empty_row_for_enemy[1])
+                Screen.draw_dinosaur(empty_row_for_enemy[0], empty_row_for_enemy[1])
             else:
                 print(f"walking Right --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
                 empty_row_for_enemy[0] += 1
                 Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1],walk_right,state)
-                Enemy.draw_dinosaur(empty_row_for_enemy[0], empty_row_for_enemy[1])
-
+                Screen.draw_dinosaur(empty_row_for_enemy[0], empty_row_for_enemy[1])
+        pygame.display.flip()
         # for row in matrix:
         #     print(row)
         # print("="*190)
