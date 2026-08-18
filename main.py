@@ -121,8 +121,10 @@ def add_flag(matrix):
 #
 #     return matrix, pits_locations
 
+one_second_loop = time.time()
+
 def main():
-    global current_game,state
+    global current_game,state, one_second_loop
     pygame.init()
 
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
@@ -132,6 +134,8 @@ def main():
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
     empty_row_for_enemy = Enemy.find_empty_row(matrix)
+
+    walk_right = False
 
     print(empty_row_for_enemy)
 
@@ -199,6 +203,21 @@ def main():
         # for row in matrix:
         #     print(row)
         # print("="*190)
+        if time.time() - one_second_loop > 1:
+            one_second_loop = time.time()
+            if empty_row_for_enemy[0] == 2:
+                walk_right = False
+            elif empty_row_for_enemy[0] == 47:
+                walk_right = True
+
+            if walk_right:
+                print(f"walking Left --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
+                empty_row_for_enemy[0] -= 1
+                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1])
+            else:
+                print(f"walking Right --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
+                empty_row_for_enemy[0] += 1
+                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1])
 
     pygame.quit()
     sys.exit()
