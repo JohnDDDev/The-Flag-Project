@@ -29,4 +29,4 @@ AMOUNT_OF_MINES = 20
 AMOUNT_OF_BUSHES=20
 AMOUNT_OF_PITS = 5
 
-SAVE_FILE = 'dataset.csv'
+SAVE_FILE = 'dataset.csv' #יוצרים קובץ אליו ירד כל המידע של המשחק

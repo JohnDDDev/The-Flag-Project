@@ -2,63 +2,62 @@ import time
 import pygame
 import consts
 import random
-import Enemy
+# קורא לכל התמונות שאנחנו מתשמשים בהם
 player = pygame.image.load(consts.PLAYER_IMAGE)
 flag = pygame.image.load(consts.FLAG_IMAGE)
 bush= pygame.image.load(consts.GRASS_IMAGE)
-clock = pygame.time.Clock()
 mine=pygame.image.load(consts.MINE_IMAGE)
 pit = pygame.image.load(consts.PIT_IMAGE)
 dinosaur = pygame.image.load(consts.Dinosaur)
+#לספור את זמן הריצה של הקוד
+clock = pygame.time.Clock()
 
-
-def create_screen():
+def create_screen(): #יוצר את המסך
     global screen
-    pygame.init()
-    screen= pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
-    pygame.display.set_caption("the game ")
+    pygame.init() # הפעלה של המשחק
+    screen= pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))# יוצרת מסך גרפי
+    pygame.display.set_caption("the flag game ") # כותרת החלון
     return screen
 
 def draw_background(screen,color):
     screen.fill(color)
 
-def draw_grid(screen,mines_locations,pits_locations):
+def draw_grid(screen,mines_locations,pits_locations):#לצייר את המסך השחור עם המשבצות , המוקשים והחורים שחורים
     draw_background(screen,consts.GRID_COLOR)
     for x in range(0, consts.WINDOW_WIDTH, consts.TILE_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.TILE_SIZE):
-            rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE)
-            pygame.draw.rect(screen, consts.LINES_COLOR, rect, 1)
+            rect = pygame.Rect(x, y, consts.TILE_SIZE, consts.TILE_SIZE) # ליצור ריבוע
+            pygame.draw.rect(screen, consts.LINES_COLOR, rect, 1) # איפה הוא מצויר, מה הצבע של הקוים , מה העובי של העט ואיזה צורה מצוירת
     for j in mines_locations:
         draw_mine(j[0], j[1])
 
     for j in pits_locations:
         draw_pit(j[0],j[1])
 
-def random_bushes(amount_of_bushes):
+def random_bushes(amount_of_bushes): # רשימה של שיחים רנדומלים
     bushes=[]
     while amount_of_bushes > 0:
         bush_x = random.randrange(1, consts.MATRIX_COLS-2)
         bush_y = random.randrange(0, consts.MATRIX_ROWS-2)
         while ((0 <= bush_x <= 2 and 0 <= bush_y<= 4) or
-               (bush_x>= consts.MATRIX_COLS - 4 and bush_y >= consts.MATRIX_ROWS - 3)):
+               (bush_x>= consts.MATRIX_COLS - 4 and bush_y >= consts.MATRIX_ROWS - 3)): # שלא יחרוג מגבולות המטריצה, ושלא יהיה על השחקן
             bush_x = random.randrange(1, consts.MATRIX_COLS - 1)
             bush_y = random.randrange(0, consts.MATRIX_ROWS)
         bushes.append((bush_x, bush_y))
-        #matrix[bush_x][bush_y] = "bush"
         amount_of_bushes -=1
     return bushes
 
 def bush_surface():
     width = 2 * consts.TILE_SIZE
     height = 2 * consts.TILE_SIZE
-    sized_image = pygame.transform.scale(bush, (width, height))
+    sized_image = pygame.transform.scale(bush, (width, height)) # שינוי התמונה לגודל מסוים לפי הביקוש
     return sized_image
 
 def drew_bush(x,y):
     bush_surface_place = bush_surface()
     pixel_x = x * consts.TILE_SIZE
     pixel_y = y * consts.TILE_SIZE
-    screen.blit(bush_surface_place, (pixel_x, pixel_y))
+    screen.blit(bush_surface_place, (pixel_x, pixel_y)) # להתאים את התמונה לפי הפיקסלים שיש
 
 def player_surface():
     width = 2 * consts.TILE_SIZE
@@ -86,7 +85,7 @@ def draw_flag(x1,y1):
 
 def draw_message(message, font_size, color, location):
     font = pygame.font.SysFont('arial', font_size)
-    text_img = font.render(message, True, color)
+    text_img = font.render(message, True, color) # להפוך את הטקסט לתמונה
     screen.blit(text_img, location)
 
 
@@ -113,7 +112,7 @@ def wellcome_massage():
 
 screen = create_screen()
 bushes_locations = random_bushes(consts.AMOUNT_OF_BUSHES)
-start_time = time.time()
+start_time = time.time() # הזמן הנוכחי בו מתחילים
 
 def pit_surface():
     width = 3 * consts.TILE_SIZE
@@ -142,11 +141,10 @@ def draw_mine(x, y):
 def draw_game(state,mines_locations,pits_locations,dinosaur_location,bushes=bushes_locations):
     global player
     draw_background(screen,consts.BACKGROUND_COLOR)
-
     for i in bushes:
         drew_bush(i[0],i[1])
 
-    if not state['is_screen_visible']:
+    if not state['is_screen_visible']:# להפוך את המסך לשחור
         draw_grid(screen , mines_locations,pits_locations)
 
     draw_flag(state['flag_x'],state['flag_y'])
@@ -162,6 +160,7 @@ def draw_game(state,mines_locations,pits_locations,dinosaur_location,bushes=bush
         player = pygame.image.load(consts.PLAYER_IMAGE)
 
     draw_player(state['player_x'],state['player_y'])
+
     if not time.time() - start_time >5:
         wellcome_massage()
 
