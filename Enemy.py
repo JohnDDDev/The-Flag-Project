@@ -8,7 +8,7 @@ def find_empty_row(matrix):
         return i
     else:
         print("no Empty Row on board")
-        return 0
+        return 2
 
 def walk_dinosaur(matrix):
     right = True
