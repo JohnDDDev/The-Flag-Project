@@ -14,7 +14,8 @@ def add_pits(matrix,AMOUNT_OF_PITS):
             pit_y = random.randrange(0, consts.MATRIX_ROWS)
 
         if 'mine' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) or \
-                'pit' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) :# בודק שהמקום שהפצצות לא אחד על השני
+                'pit' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) or pit_y < 4 or \
+                'mine' in (matrix[pit_y-1][pit_x-1],matrix[pit_y-1][pit_x+1],matrix[pit_y-1][pit_x]):# בודק שהמקום שהפצצות לא אחד על השני
             continue
 
         matrix[pit_y][pit_x] = 'pit'
