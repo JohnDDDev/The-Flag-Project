@@ -7,6 +7,8 @@ import pygame
 import time
 import sys
 
+import teleport
+
 state = {     #המצב הרגעי של המשחק
     'player_x' : 0,
     'player_y' : 0,
@@ -66,12 +68,8 @@ def append_player(player,matrix): # בודק את המיקום של גוף הש�
             state['enable_input'] = False
             state['Timer_exit'] = time.time()
         elif matrix[location[0]][location[1]] == 'pit':
-            ##################################
             print('teleport')
-            for row in matrix:
-                print(row)
-            print("- "*200)
-            ###################################
+
 
         matrix[location[0]][location[1]] = 'legs'
 
@@ -122,7 +120,7 @@ def main():
 
     matrix  = create_matrix(consts.MATRIX_ROWS, consts.MATRIX_COLS)
     matrix , mines_locations = random_mines(matrix,consts.AMOUNT_OF_MINES)
-    matrix , pits_locations = add_pits(matrix,consts.AMOUNT_OF_PITS)
+    matrix , pits_locations = teleport.add_pits(matrix,consts.AMOUNT_OF_PITS)
 
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
