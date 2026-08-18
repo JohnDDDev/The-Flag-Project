@@ -218,10 +218,6 @@ def main():
 
         Screen.draw_game(state, mines_locations, pits_locations, empty_row_for_enemy,bushes_locations)
 
-        for row in matrix:
-            print(row)
-        print("="*190)
-
     pygame.quit()
     sys.exit()
 
