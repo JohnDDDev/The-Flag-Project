@@ -199,7 +199,6 @@ def main():
         Screen.draw_game(state,mines_locations,pits_locations,bushes_locations)
         pygame.display.flip()
 
-        Enemy.walk_dinosaur(matrix,empty_row_for_enemy[0],empty_row_for_enemy[1])
         # for row in matrix:
         #     print(row)
         # print("="*190)
@@ -213,11 +212,11 @@ def main():
             if walk_right:
                 print(f"walking Left --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
                 empty_row_for_enemy[0] -= 1
-                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1])
+                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1],walk_right,state,Screen)
             else:
                 print(f"walking Right --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
                 empty_row_for_enemy[0] += 1
-                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1])
+                Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1],walk_right,state,Screen)
 
     pygame.quit()
     sys.exit()
