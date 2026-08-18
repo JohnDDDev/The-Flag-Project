@@ -91,7 +91,7 @@ def draw_message(message, font_size, color, location):
 
 
 def dinosaur_surface():
-    width = 2 * consts.TILE_SIZE
+    width = 3 * consts.TILE_SIZE
     height = 4 * consts.TILE_SIZE
     sized_image = pygame.transform.scale(dinosaur, (width, height))
     return sized_image
@@ -139,7 +139,7 @@ def draw_mine(x, y):
     pixel_y = y * consts.TILE_SIZE
     screen.blit(mine_surface_place, (pixel_x, pixel_y))
 
-def draw_game(state,mines_locations,pits_locations,bushes=bushes_locations):
+def draw_game(state,mines_locations,pits_locations,dinosaur_location,bushes=bushes_locations):
     global player
     draw_background(screen,consts.BACKGROUND_COLOR)
 
@@ -169,6 +169,8 @@ def draw_game(state,mines_locations,pits_locations,bushes=bushes_locations):
         state['won_game'] = False
         state['player_state'] = 'won'
         state['enable_input'] = False
+
+    draw_dinosaur(dinosaur_location[0],dinosaur_location[1]-3)
 
     pygame.display.flip()
     clock.tick(60)

@@ -23,7 +23,7 @@ state = {     #המצב הרגעי של המשחק
     'flag_x' : consts.MATRIX_COLS-4,
     'flag_y' : consts.MATRIX_ROWS-3,
     'dinosaur_x': 0,
-    'dinosaur_y': 22
+    'dinosaur_y': 0
 }
 
 current_game = {}
@@ -199,10 +199,7 @@ def main():
             'pits_locations' : pits_locations
         }
 
-        Screen.draw_game(state,mines_locations,pits_locations,bushes_locations)
-
-
-        if time.time() - one_second_loop > 1:
+        if time.time() - one_second_loop > 0.2:
             one_second_loop = time.time()
             if empty_row_for_enemy[0] == 2:
                 walk_right = False
@@ -218,11 +215,12 @@ def main():
                 print(f"walking Right --- ({empty_row_for_enemy[0],empty_row_for_enemy[1]})")
                 empty_row_for_enemy[0] += 1
                 Enemy.walk_dinosaur(matrix, empty_row_for_enemy[0], empty_row_for_enemy[1],walk_right,state)
-                Screen.draw_dinosaur(empty_row_for_enemy[0], empty_row_for_enemy[1])
-        pygame.display.flip()
-        # for row in matrix:
-        #     print(row)
-        # print("="*190)
+
+        Screen.draw_game(state, mines_locations, pits_locations, empty_row_for_enemy,bushes_locations)
+
+        for row in matrix:
+            print(row)
+        print("="*190)
 
     pygame.quit()
     sys.exit()
