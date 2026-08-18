@@ -69,7 +69,13 @@ def append_player(player,matrix): # בודק את המיקום של גוף הש�
             state['Timer_exit'] = time.time()
         elif matrix[location[0]][location[1]] == 'pit':
             print('teleport')
+            pit_locations = teleport.add_pits(matrix,consts.AMOUNT_OF_PITS)
+            if pit_locations:
+                range_pit = random.choice(pit_locations)
+                state['player_x']= range_pit[0]
+                state['player_y']= range_pit[1]
 
+                return matrix
 
         matrix[location[0]][location[1]] = 'legs'
 
@@ -90,29 +96,29 @@ def add_flag(matrix):
             matrix[row][col] = 'flag'
     return matrix
 
-def add_pits(matrix,AMOUNT_OF_PITS):
-    pits_locations = []
-    while AMOUNT_OF_PITS>0:
-        pit_x = random.randrange(1,consts.MATRIX_COLS-1)
-        pit_y = random.randrange(0,consts.MATRIX_ROWS)
-
-        while ((0 <= pit_x <= 2 and 0 <= pit_y <= 4) or
-               (pit_x >= consts.MATRIX_COLS - 4 and pit_y >= consts.MATRIX_ROWS - 3)): # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
-
-            pit_x = random.randrange(1, consts.MATRIX_COLS - 1)
-            pit_y = random.randrange(0, consts.MATRIX_ROWS)
-
-        if 'mine' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) or \
-                'pit' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) :# בודק שהמקום שהפצצות לא אחד על השני
-            continue
-
-        matrix[pit_y][pit_x] = 'pit'
-        matrix[pit_y][pit_x-1] = 'pit'
-        matrix[pit_y][pit_x+1] = 'pit'
-        pits_locations.append((pit_x-1,pit_y))
-        AMOUNT_OF_PITS -= 1
-
-    return matrix, pits_locations
+# def add_pits(matrix,AMOUNT_OF_PITS):
+#     pits_locations = []
+#     while AMOUNT_OF_PITS>0:
+#         pit_x = random.randrange(1,consts.MATRIX_COLS-1)
+#         pit_y = random.randrange(0,consts.MATRIX_ROWS)
+#
+#         while ((0 <= pit_x <= 2 and 0 <= pit_y <= 4) or
+#                (pit_x >= consts.MATRIX_COLS - 4 and pit_y >= consts.MATRIX_ROWS - 3)): # בדיקה אם המיקום של הפצצה נמצא במיקום שהשקן מתחיל בו ומבטל אותו
+#
+#             pit_x = random.randrange(1, consts.MATRIX_COLS - 1)
+#             pit_y = random.randrange(0, consts.MATRIX_ROWS)
+#
+#         if 'mine' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) or \
+#                 'pit' in (matrix[pit_y][pit_x-1],matrix[pit_y][pit_x+1],matrix[pit_y][pit_x]) :# בודק שהמקום שהפצצות לא אחד על השני
+#             continue
+#
+#         matrix[pit_y][pit_x] = 'pit'
+#         matrix[pit_y][pit_x-1] = 'pit'
+#         matrix[pit_y][pit_x+1] = 'pit'
+#         pits_locations.append((pit_x-1,pit_y))
+#         AMOUNT_OF_PITS -= 1
+#
+#     return matrix, pits_locations
 
 def main():
     global current_game,state

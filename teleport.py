@@ -24,6 +24,6 @@ def add_pits(matrix,AMOUNT_OF_PITS):
         AMOUNT_OF_PITS -= 1
     return matrix , pits_locations
 
-# random_pit= random.choice()
+
 
 
