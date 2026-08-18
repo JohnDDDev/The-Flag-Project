@@ -53,7 +53,7 @@ def random_mines(matrix,amount_of_mines): # ליצור את הפצצות בצו�
 
     return matrix ,mines_locations
 
-def append_player(player,matrix): # בודק את המיקום של גוף השחקן ורגליו ומכניס אותם למטריקס
+def append_player(player,matrix,pit_locations): # בודק את המיקום של גוף השחקן ורגליו ומכניס אותם למטריקס
     for location in player['body']:
         if matrix[location[0]][location[1]] == 'flag':
             state['won_game'] = True
@@ -68,12 +68,12 @@ def append_player(player,matrix): # בודק את המיקום של גוף הש�
             state['enable_input'] = False
             state['Timer_exit'] = time.time()
         elif matrix[location[0]][location[1]] == 'pit':
-            print('teleport')
-            pit_locations = teleport.add_pits(matrix,consts.AMOUNT_OF_PITS)
+            print('teleporting to ..')
             if pit_locations:
                 range_pit = random.choice(pit_locations)
-                state['player_x']= range_pit[0]
-                state['player_y']= range_pit[1]
+                print(range_pit[0],range_pit[1]-4)
+                state['player_x']= range_pit[0] + 1 #מרכז הבור
+                state['player_y']= range_pit[1] - 4 # מעלה למעלה
 
                 return matrix
 
@@ -178,7 +178,7 @@ def main():
             quit()
 
         player = soldier.get_player_location(state)
-        matrix = append_player(player,matrix)
+        matrix = append_player(player,matrix,pits_locations)
 
         current_game = {
             'state': state,
