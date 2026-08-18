@@ -1,4 +1,5 @@
 import Database
+import Enemy
 import consts
 import Screen
 import random
@@ -129,6 +130,10 @@ def main():
     matrix , pits_locations = teleport.add_pits(matrix,consts.AMOUNT_OF_PITS)
 
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
+
+    empty_row = Enemy.find_empty_row(matrix)
+
+    print(empty_row)
 
     while state['game_state'] == 'running':
 
