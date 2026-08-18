@@ -9,6 +9,8 @@ bush= pygame.image.load(consts.GRASS_IMAGE)
 clock = pygame.time.Clock()
 mine=pygame.image.load(consts.MINE_IMAGE)
 pit = pygame.image.load(consts.PIT_IMAGE)
+dinosaur = pygame.image.load(consts.Dinosaur)
+
 
 def create_screen():
     global screen
@@ -86,6 +88,21 @@ def draw_message(message, font_size, color, location):
     font = pygame.font.SysFont('arial', font_size)
     text_img = font.render(message, True, color)
     screen.blit(text_img, location)
+
+# def dinosaur_surface():
+#     width = 2 * consts.TILE_SIZE
+#     height = 4 * consts.TILE_SIZE
+#     sized_image = pygame.transform.scale(dinosaur, (width, height))
+#     return sized_image
+#
+# def draw_dinosaur(x, y):
+#     dinosaur_surface_place = dinosaur_surface()
+#     pixel_x = x * consts.TILE_SIZE
+#     pixel_y = y * consts.TILE_SIZE
+#     screen.blit(dinosaur_surface_place, (pixel_x, pixel_y))
+#
+
+
 
 def draw_lost_massage():
     draw_message('You Lost!',100,'red',(consts.WINDOW_WIDTH/3,consts.WINDOW_HEIGHT/3))
