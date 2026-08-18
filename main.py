@@ -131,12 +131,11 @@ def main():
 
     bushes_locations = Screen.random_bushes(consts.AMOUNT_OF_BUSHES)
 
-    empty_row = Enemy.find_empty_row(matrix)
+    empty_row_for_enemy = Enemy.find_empty_row(matrix)
 
-    print(empty_row)
+    print(empty_row_for_enemy)
 
     while state['game_state'] == 'running':
-
         player = soldier.get_player_location(state)
         matrix = clean_player_location(player, matrix)
         matrix = add_flag(matrix)
@@ -196,6 +195,7 @@ def main():
         Screen.draw_game(state,mines_locations,pits_locations,bushes_locations)
         pygame.display.flip()
 
+        Enemy.walk_dinosaur(matrix,empty_row_for_enemy[0],empty_row_for_enemy[1])
         # for row in matrix:
         #     print(row)
         # print("="*190)
